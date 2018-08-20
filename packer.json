@@ -13,7 +13,7 @@
 			"disk_type_id":"thin",
 			"communicator":"ssh",
 			"ssh_timeout": "30m",
-			"ssh_username":"ngen",
+			"ssh_username":"admin",
 			"ssh_password":"{{user `ssh_password`}}",
 			"remote_host":"{{user `remote_host`}}",
 			"remote_username":"{{user `remote_username`}}",
