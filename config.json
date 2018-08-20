@@ -1,4 +1,5 @@
 {
 	"do_not_validate_certs":true,
-	"vnc_disable_password":true
+	"vnc_disable_password":true,
+	"notification_email": "test@test.com"
 }
