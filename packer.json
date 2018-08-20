@@ -1,0 +1,90 @@
+{
+
+	"builders":[
+		{
+			"type": "vmware-iso",
+			"iso_url": "http://mirror.riverfrontnetworks.com/CentOS/7/isos/x86_64/CentOS-7-x86_64-DVD-1804.iso",
+			"iso_checksum_type": "sha256",
+			"iso_checksum_url": "http://mirror.riverfrontnetworks.com/CentOS/7/isos/x86_64/sha256sum.txt",
+			"guest_os_type":"rhel7-64",
+			"vm_name":"{{user `vm_name`}}",
+			"remote_type":"esx5",
+			"disk_size":55000,
+			"disk_type_id":"thin",
+			"communicator":"ssh",
+			"ssh_timeout": "30m",
+			"ssh_username":"ngen",
+			"ssh_password":"{{user `ssh_password`}}",
+			"remote_host":"{{user `remote_host`}}",
+			"remote_username":"{{user `remote_username`}}",
+			"remote_password":"{{user `remote_password`}}",
+			"remote_datastore": "{{user `remote_datastore`}}",
+			"shutdown_command":"echo '{{user `ssh_password`}}' | sudo -S shutdown -P now",
+			"shutdown_timeout":"10m",	
+			"vmx_data": {
+				"ethernet0.virtualDev":"vmxnet3",
+				"ethernet0.networkName":"{{user `vm_network`}}",
+				"ethernet0.startConnected":"TRUE",
+				"ethernet0.Connected":"TRUE"
+			},
+			"http_directory": "unattended_files/",
+			"boot_command":[
+				"<tab> text net.ifnames=0 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks_stig.cfg <enter>"
+			]
+
+		}
+	],
+	"provisioners":[
+		{
+			"type":"shell",
+			"script":"linux_scripts/provision.sh",
+			"execute_command": "echo '{{user `ssh_password`}}' | sudo -S sh -c '{{.Vars}} {{.Path}}'"
+		}
+	],
+	"post-processors":[
+		[
+			{
+				"type": "vsphere",
+				"disk_mode":"thin",
+				"cluster":"{{user `cluster`}}",
+				"datacenter": "{{user `destination_datacenter`}}",
+				"host":"{{user `vcenter_server`}}",
+				"username": "{{user `vcenter_username`}}",
+				"password": "{{user `vcenter_password`}}",
+				"datastore": "{{user `destination_datastore`}}",
+				"vm_folder":"{{user `vm_folder`}}",
+				"vm_network":"{{user `destination_network`}}",
+				"insecure":"{{user `insecure`}}",
+				"vm_name":"{{user `vm_name`}}",
+				"overwrite": true
+			},
+			{
+				"type": "vsphere-template",
+				"datacenter": "{{user `destination_datacenter`}}",
+				"host":"{{user `vcenter_server`}}",
+				"username": "{{user `vcenter_username`}}",
+				"password": "{{user `vcenter_password`}}",
+				"folder":"{{user `vm_folder`}}",
+				"insecure":"{{user `insecure`}}"	
+			}
+		]
+	],
+	"variables":{
+		"vcenter_password":"{{env `vcenter_password`}}",
+		"vcenter_username":"{{env `vcenter_username`}}",
+		"remote_host":"{{env `remote_host`}}",
+		"vcenter_server":"{{env `vcenter_server`}}",
+		"remote_password":"{{env `remote_password`}}",
+		"remote_username": "{{env `remote_username`}}",
+		"ssh_password":"{{env `login_password`}}",
+		"destination_datastore": "{{env `destination_datastore`}}",
+		"remote_datastore": "{{env `datastore`}}",
+		"insecure": "{{env `do_not_validate_certs`}}",
+		"vm_folder":"{{env `vm_folder`}}",
+		"cluster": "{{env `cluster`}}",
+		"vm_network": "{{env `build_network`}}",
+		"vm_name": "rhel75_template",
+		"destination_datacenter": "{{env `destination_datacenter`}}",
+		"destination_network": "{{env `destination_network`}}"
+	}
+}
