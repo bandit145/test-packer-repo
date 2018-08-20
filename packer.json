@@ -27,9 +27,11 @@
 				"ethernet0.startConnected":"TRUE",
 				"ethernet0.Connected":"TRUE"
 			},
-			"http_directory": "ks/",
+			"floppy_files": [
+				"ks/ks_stig.cfg"
+			],
 			"boot_command":[
-				"<tab> text net.ifnames=0 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks_stig.cfg <enter>"
+				"<tab> text net.ifnames=0 ks=hd:fd0:/ks_stig.cfg <enter>"
 			]
 
 		}
