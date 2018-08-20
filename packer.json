@@ -20,6 +20,7 @@
 			"remote_password":"{{user `remote_password`}}",
 			"remote_datastore": "{{user `remote_datastore`}}",
 			"shutdown_command":"echo '{{user `ssh_password`}}' | sudo -S shutdown -P now",
+			"vnc_disable_password":"{{user `vnc_disable_password`}}",
 			"shutdown_timeout":"10m",	
 			"vmx_data": {
 				"ethernet0.virtualDev":"vmxnet3",
@@ -87,6 +88,7 @@
 		"vm_network": "{{env `build_network`}}",
 		"vm_name": "rhel75_template",
 		"destination_datacenter": "{{env `destination_datacenter`}}",
-		"destination_network": "{{env `destination_network`}}"
+		"destination_network": "{{env `destination_network`}}",
+		"vnc_disable_password": "{{env `vnc_disable_password`}}"
 	}
 }
