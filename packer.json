@@ -27,7 +27,7 @@
 				"ethernet0.startConnected":"TRUE",
 				"ethernet0.Connected":"TRUE"
 			},
-			"http_directory": "unattended_files/",
+			"http_directory": "ks/",
 			"boot_command":[
 				"<tab> text net.ifnames=0 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks_stig.cfg <enter>"
 			]
@@ -37,7 +37,7 @@
 	"provisioners":[
 		{
 			"type":"shell",
-			"script":"linux_scripts/provision.sh",
+			"script":"provision.sh",
 			"execute_command": "echo '{{user `ssh_password`}}' | sudo -S sh -c '{{.Vars}} {{.Path}}'"
 		}
 	],

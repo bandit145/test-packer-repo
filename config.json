@@ -1,18 +1,3 @@
 {
-	"vcenter_server":"dmcisdnihm101v.dmci-isf.com",
-	"cluster": "DMCISDNIHN07",
-	"datastore": "HV901LocalDatastore1",
-	"datacenter":"SDCP-DevOps",
-	"vm_folder":"/DevOps-RHEL/Core-Infrastructure/Test-Templates",
 	"do_not_validate_certs":true,
-	"remote_host":"dmcisdnihv901.dmci-isf.com",
-	"build_network":"Dev-SDNI-VLAN0027",
-	"destination_datastore":"nz110_fp_hn07_vmfs001",
-	"vcenter_username":"prompt",
-	"vcenter_password":"password",
-	"login_password":"password",
-	"remote_username":"prompt",
-	"remote_password":"password",
-	"destination_datacenter":"SDNI Core 01",
-	"destination_network":"DPG-SDNI_VLAN-ID0027"
 }
